@@ -114,7 +114,7 @@ $(function () {
     }
 
     // 计算爱心位置时调整 x 和 y 坐标，使其在正方形内按比例生成
-    calcPosition(x, y, ratio) {
+    /*(calcPosition(x, y, ratio) {
       const force =
         1 / ((x - DEVIATION_W) ** 2 + (y - DEVIATION_H) ** 2) ** 0.52;
 
@@ -122,8 +122,26 @@ $(function () {
       const dy = ratio * force * (y - DEVIATION_H) + getRandi(-1, 1);
 
       return [x - dx / 2 - heartSize / 2, y - dy + $("#loveHeart").height() / 4 - heartSize / 2];
+    }*/
+    
+    calcPosition(x, y, ratio) {
+      const force =
+        1 / ((x - DEVIATION_W) ** 2 + (y - DEVIATION_H) ** 2) ** 0.52;
+    
+      const dx = ratio * force * (x - DEVIATION_W) + getRandi(-1, 1);
+      const dy = ratio * force * (y - DEVIATION_H) + getRandi(-1, 1);
+    
+      // 计算中心点，使爱心始终居中
+      const centerX = clientWidth / 2;
+      const centerY = clientHeight / 2;
+    
+      // 计算爱心的偏移量，确保不会超出屏幕边界
+      const adjustedX = centerX + (x - DEVIATION_W - dx / 2) * 0.8;
+      const adjustedY = centerY + (y - DEVIATION_H - dy) * 0.75;
+    
+      return [adjustedX, adjustedY];
     }
-
+    
     /**calcPosition(x, y, ratio) {
           const force =
             1 / ((x - DEVIATION_W) ** 2 + (y - DEVIATION_H) ** 2) ** 0.52;
