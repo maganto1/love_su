@@ -131,13 +131,17 @@ $(function () {
       const dx = ratio * force * (x - DEVIATION_W) + getRandi(-1, 1);
       const dy = ratio * force * (y - DEVIATION_H) + getRandi(-1, 1);
     
-      // 计算中心点，使爱心始终居中
+      // 计算中心点，保证居中
       const centerX = clientWidth / 2;
       const centerY = clientHeight / 2;
     
-      // 计算爱心的偏移量，确保不会超出屏幕边界
+      // 计算爱心的大小，防止下边界溢出
+      const adjustedHeartSize = Math.min(clientWidth, clientHeight) * 0.75; // 75% 画布大小
+      const yOffset = adjustedHeartSize / 1.5; // 适当上移，避免下溢出
+    
+      // 调整 X 和 Y 位置
       const adjustedX = centerX + (x - DEVIATION_W - dx / 2) * 0.8;
-      const adjustedY = centerY + (y - DEVIATION_H - dy) * 0.75;
+      const adjustedY = centerY + (y - DEVIATION_H - dy) * 0.8 - yOffset;
     
       return [adjustedX, adjustedY];
     }
